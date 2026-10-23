@@ -23,10 +23,12 @@ class BookSeeder extends Seeder
             ['name' => 'Gramedia Pustaka Utama'],
             ['city' => 'Jakarta']
         );
+
         $mizan = Publisher::firstOrCreate(
             ['name' => 'Mizan Pustaka'],
             ['city' => 'Bandung']
         );
+
         $bentang = Publisher::firstOrCreate(
             ['name' => 'Bentang Pustaka'],
             ['city' => 'Yogyakarta']

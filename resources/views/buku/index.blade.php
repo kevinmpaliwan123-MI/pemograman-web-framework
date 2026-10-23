@@ -3,7 +3,10 @@
 @section('title', 'Daftar Buku — BookStore')
 
 @section('content')
-    <h1 class="mb-4">Daftar Buku</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0">Daftar Buku</h1>
+        <a href="{{ url('/buku/create') }}" class="btn btn-primary">+ Tambah Buku</a>
+    </div>
 
     <div class="row row-cols-1 row-cols-md-3 g-4">
         @foreach ($daftarBuku as $buku)
