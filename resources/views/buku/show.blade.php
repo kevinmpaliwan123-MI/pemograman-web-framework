@@ -7,7 +7,7 @@
     @if ($buku)
         <div class="row">
             <div class="col-md-4">
-                <img src="{{ asset('images/sampul-placeholder.png') }}" class="img-fluid rounded"
+                <img src="{{ asset('images/img-buku.jpg') }}" class="img-fluid rounded"
                     alt="Sampul {{ $buku->title }}">
             </div>
             <div class="col-md-8">

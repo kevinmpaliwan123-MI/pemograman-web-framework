@@ -9,7 +9,7 @@
         @foreach ($daftarBuku as $buku)
             <div class="col">
                 <div class="card h-100 kartu-buku">
-                    <img src="{{ asset('images/sampul-placeholder.png') }}" class="card-img-top"
+                    <img src="{{ asset('images/img-buku 2.jpg') }}" class="card-img-top"
                         alt="Sampul {{ $buku->title }}">
                     <div class="card-body d-flex flex-column">
                         <span class="badge bg-secondary align-self-start mb-2">{{ $buku->category->name }}</span>
