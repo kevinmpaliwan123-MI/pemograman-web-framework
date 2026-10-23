@@ -12,7 +12,12 @@
                     <img src="{{ asset('images/img-buku 2.jpg') }}" class="card-img-top"
                         alt="Sampul {{ $buku->title }}">
                     <div class="card-body d-flex flex-column">
-                        <span class="badge bg-secondary align-self-start mb-2">{{ $buku->category->name }}</span>
+                        <div class="d-flex gap-2">
+                            <span class="badge bg-secondary align-self-start mb-2">{{ $buku->category->name }}</span>
+                            @if ($buku->publisher)
+                                <span class="badge bg-primary align-self-start mb-2">{{ $buku->publisher->name }}</span>
+                            @endif
+                        </div>
                         <h5 class="card-title">{{ $buku->title }}</h5>
                         <p class="card-text text-muted mb-1">{{ $buku->author_name }}</p>
                         <p class="card-text harga-buku">Rp{{ number_format($buku->price, 0, ',', '.') }}</p>
