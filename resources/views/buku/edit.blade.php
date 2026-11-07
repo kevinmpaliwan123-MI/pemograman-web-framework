@@ -34,9 +34,7 @@
             <select id="category_id" name="category_id" class="form-select @error('category_id') is-invalid @enderror">
                 <option value="">-- Pilih Kategori --</option>
                 @foreach ($daftarKategori as $kategori)
-                    <option value="{{ $kategori->id }}" {{ old('category_id', $buku->category_id) == $kategori->id ? 'selected' : '' }}>
-                        {{ $kategori->name }}
-                    </option>
+                    <option value="{{ $kategori->id }}" @selected(old('category_id', $buku->category_id) == $kategori->id)>{{ $kategori->name }}</option>
                 @endforeach
             </select>
             @error('category_id')
@@ -49,9 +47,7 @@
             <select id="publisher_id" name="publisher_id" class="form-select @error('publisher_id') is-invalid @enderror">
                 <option value="">-- Pilih Penerbit --</option>
                 @foreach ($daftarPenerbit as $penerbit)
-                    <option value="{{ $penerbit->id }}" {{ old('publisher_id', $buku->publisher_id) == $penerbit->id ? 'selected' : '' }}>
-                        {{ $penerbit->name }}
-                    </option>
+                    <option value="{{ $penerbit->id }}" @selected(old('publisher_id', $buku->publisher_id) == $penerbit->id)>{{ $penerbit->name }}</option>
                 @endforeach
             </select>
             @error('publisher_id')
@@ -64,10 +60,22 @@
             <input type="text" id="price" name="price"
                    class="form-control @error('price') is-invalid @enderror"
                    value="{{ old('price', (int) $buku->price) }}">
+            <div class="form-text">Ketik angka saja, tanpa titik atau koma (contoh: 85000).</div>
             @error('price')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
+
+        <div class="mb-3">
+            <label for="stock" class="form-label">Stok</label>
+            <input type="text" id="stock" name="stock"
+                   class="form-control @error('stock') is-invalid @enderror"
+                   value="{{ old('stock', $buku->stock) }}">
+            @error('stock')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
 
         <div class="mb-3">
             <label for="published_year" class="form-label">Tahun Terbit (opsional)</label>
