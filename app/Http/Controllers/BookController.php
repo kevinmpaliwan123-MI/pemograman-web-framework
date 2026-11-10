@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Publisher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
@@ -61,7 +62,9 @@ class BookController extends Controller
     {
         $validated = $request->validate($this->aturan(), $this->pesan());
 
-        if (!Schema::hasColumn('books', 'cover')) {
+        if ($request->hasFile('cover')) {
+            $validated['cover'] = $request->file('cover')->store('covers', 'public');
+        } else {
             unset($validated['cover']);
         }
 
@@ -104,7 +107,13 @@ class BookController extends Controller
 
         $validated = $request->validate($this->aturan(), $this->pesan());
 
-        if (!Schema::hasColumn('books', 'cover')) {
+        if ($request->hasFile('cover')) {
+            // Hapus cover lama jika ada di storage
+            if ($buku->cover && Storage::disk('public')->exists($buku->cover)) {
+                Storage::disk('public')->delete($buku->cover);
+            }
+            $validated['cover'] = $request->file('cover')->store('covers', 'public');
+        } else {
             unset($validated['cover']);
         }
 
@@ -117,6 +126,11 @@ class BookController extends Controller
     public function destroy($id)
     {
         $buku = Book::findOrFail($id);
+
+        if ($buku->cover && Storage::disk('public')->exists($buku->cover)) {
+            Storage::disk('public')->delete($buku->cover);
+        }
+
         $buku->delete();
 
         return redirect('/buku')

@@ -53,7 +53,7 @@
             @foreach ($daftarBuku as $buku)
                 <div class="col">
                     <div class="card h-100 kartu-buku">
-                        <img src="{{ asset('images/cover-books.jpg')}}" class="card-img-top" alt="Sampul {{ $buku->title }}">
+                        <img src="{{ $buku->cover ? asset('storage/' . $buku->cover) : asset('images/cover-books.jpg') }}" class="card-img-top" alt="Sampul {{ $buku->title }}" style="height: 250px; object-fit: cover;">
                         <div class="card-body d-flex flex-column">
                             <span class="badge bg-secondary align-self-start mb-2">{{ $buku->category->name }}</span>
                             <h5 class="card-title">{{ $buku->title }}</h5>

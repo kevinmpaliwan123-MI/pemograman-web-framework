@@ -7,7 +7,7 @@
     @if ($buku)
         <div class="row">
             <div class="col-md-4">
-                <img src="{{ asset('images/img-buku.jpg') }}" class="img-fluid rounded" alt="Sampul {{ $buku->title }}">
+                <img src="{{ $buku->cover ? asset('storage/' . $buku->cover) : asset('images/img-buku.jpg') }}" class="img-fluid rounded shadow-sm" alt="Sampul {{ $buku->title }}" style="max-height: 400px; width: 100%; object-fit: cover;">
             </div>
             <div class="col-md-8">
 

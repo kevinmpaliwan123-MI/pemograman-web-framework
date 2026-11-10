@@ -83,13 +83,35 @@
 
         <div class="mb-3">
             <label for="cover" class="form-label">Sampul (opsional, JPG/PNG, maksimal 2 MB)</label>
-            <input type="file" id="cover" name="cover" class="form-control @error('cover') is-invalid @enderror">
+            <input type="file" id="cover" name="cover" class="form-control @error('cover') is-invalid @enderror" accept="image/*">
             @error('cover')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
+
+            <!-- Pratinjau Sampul yang Dipilih -->
+            <div id="preview-wrapper" class="mt-3" style="display: none;">
+                <p class="small text-muted mb-1">Pratinjau Sampul:</p>
+                <img id="cover-preview" src="#" alt="Pratinjau Sampul" class="img-thumbnail" style="max-height: 200px; max-width: 100%; object-fit: contain;">
+            </div>
         </div>
 
         <button type="submit" class="btn btn-primary">Simpan</button>
         <a href="{{ url('/buku') }}" class="btn btn-outline-secondary">Batal</a>
     </form>
+
+    <script>
+        document.getElementById('cover').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('cover-preview');
+            const wrapper = document.getElementById('preview-wrapper');
+
+            if (file) {
+                preview.src = URL.createObjectURL(file);
+                wrapper.style.display = 'block';
+            } else {
+                preview.src = '#';
+                wrapper.style.display = 'none';
+            }
+        });
+    </script>
 @endsection
