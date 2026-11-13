@@ -69,7 +69,7 @@
                         <div class="card-body d-flex flex-column">
                             <span class="badge bg-secondary align-self-start mb-2">{{ $buku->category->name }}</span>
                             <h5 class="card-title">{{ $buku->title }}</h5>
-                            <p class="card-text text-muted mb-1">{{ $buku->author_name }}</p>
+                            <p class="card-text text-muted mb-1">{{ $buku->author->writer ?? "Tanpa Penulis" }}</p>
                             <p class="card-text small text-muted mb-1">{{ $buku->publisher?->name ?? 'Penerbit belum diisi' }}</p>
                             <p class="card-text harga-buku mb-1">Rp{{ number_format($buku->price, 0, ',', '.') }}</p>
                             @if ($buku->stock > 0)

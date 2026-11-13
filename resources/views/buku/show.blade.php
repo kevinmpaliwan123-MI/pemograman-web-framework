@@ -19,7 +19,7 @@
                 </div>
 
                 <h1>{{ $buku->title }}</h1>
-                <p class="text-muted">Penulis: {{ $buku->author_name }}</p>
+                <p class="text-muted">Penulis: {{ $buku->author->writer ?? 'Tanpa Penulis' }}</p>
 
                 @if ($buku->published_year)
                     <p class="text-muted">Tahun terbit: {{ $buku->published_year }}</p>

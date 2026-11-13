@@ -95,16 +95,12 @@ class AuthorController extends Controller
     {
         $author = Author::findOrFail($id);
 
-        try {
-            $author->delete();
-        } catch (QueryException $e) {
-            if ($e->getCode() !== '23000') {
-                throw $e;
-            }
-
+        if ($author->books()->exists()) {
             return redirect()->route('penulis.index')
-                ->with('error', 'penulis "' . $author->writer . '" tidak bisa dihapus karena masih dipakai oleh buku.');
+                ->with('error', 'Penulis "' . $author->writer . '" tidak bisa dihapus karena masih dipakai oleh buku.');
         }
+
+        $author->delete();
 
         return redirect()->route('penulis.index')
             ->with('success', 'penulis berhasil dihapus.');
