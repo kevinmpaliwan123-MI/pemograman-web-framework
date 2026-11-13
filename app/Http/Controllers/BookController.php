@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Author;
 use App\Models\Category;
 use App\Models\Publisher;
 use Illuminate\Http\Request;
@@ -16,12 +17,13 @@ class BookController extends Controller
         $kataKunci = $request->query('q');
         $kategoriId = $request->query('kategori');
         $penerbitId = $request->query('penerbit');
+        $penulisId = $request->query('penulis');
 
-        $daftarBuku = Book::with(['category', 'publisher'])
+        $daftarBuku = Book::with(['category', 'publisher', 'author'])
             ->when($kataKunci, function ($query, $kataKunci) {
                 $query->where(function ($query) use ($kataKunci) {
                     $query->where('title', 'like', '%' . $kataKunci . '%')
-                        ->orWhere('author_name', 'like', '%' . $kataKunci . '%');
+                        ->orWhere('author.writer', 'like', '%' . $kataKunci . '%');
                 });
             })
             ->when($kategoriId, function ($query, $kategoriId) {
@@ -29,6 +31,9 @@ class BookController extends Controller
             })
             ->when($penerbitId, function ($query, $penerbitId) {
                 $query->where('publisher_id', $penerbitId);
+            })
+            ->when($penulisId, function ($query, $penulisId) {
+                $query->where('author_id', $penulisId);
             })
 
 
@@ -40,9 +45,11 @@ class BookController extends Controller
             'daftarBuku' => $daftarBuku,
             'daftarKategori' => Category::orderBy('name')->get(),
             'daftarPenerbit' => Publisher::orderBy('name')->get(),
+            'daftarPenulis' => Author::orderBy('writer')->get(),
             'kataKunci' => $kataKunci,
             'kategoriId' => $kategoriId,
             'penerbitId' => $penerbitId,
+            'penulisId' => $penulisId,
         ]);
     }
 
@@ -52,6 +59,7 @@ class BookController extends Controller
         return view('buku.create', [
             'daftarKategori' => Category::orderBy('name')->get(),
             'daftarPenerbit' => Publisher::orderBy('name')->get(),
+            'daftarPenulis' => Author::orderBy('writer')->get()
         ]);
     }
 
@@ -76,7 +84,7 @@ class BookController extends Controller
 
     public function show($id)
     {
-        $buku = Book::with(['category', 'publisher'])->find($id);
+        $buku = Book::with(['category', 'publisher','author'])->find($id);
 
         $bukuSerupa = $buku
             ? $buku->category->books()->whereKeyNot($buku->id)->latest('id')->limit(3)->get()
@@ -98,6 +106,7 @@ class BookController extends Controller
             'buku' => $buku,
             'daftarKategori' => Category::orderBy('name')->get(),
             'daftarPenerbit' => Publisher::orderBy('name')->get(),
+            'daftarPenulis' => Author::orderBy('writer')->get()
         ]);
     }
 
@@ -141,7 +150,8 @@ class BookController extends Controller
     {
         return [
             'title' => 'required|string|max:255',
-            'author_name' => 'required|string|max:255',
+            // 'author_name' => 'required|string|max:255',
+            'author_id' => 'required|exists:authors,id',
             'category_id' => 'required|exists:categories,id',
             'publisher_id' => 'required|exists:publishers,id',
             'price' => 'required|numeric|min:0|max:99999999',
@@ -156,9 +166,10 @@ class BookController extends Controller
         return [
             'title.required' => 'Judul wajib diisi.',
             'title.max' => 'Judul maksimal 255 karakter.',
-            'author_name.required' => 'Nama penulis wajib diisi.',
+            // 'author_name.required' => 'Nama penulis wajib diisi.',
             'author_name.max' => 'Nama penulis maksimal 255 karakter.',
             'category_id.required' => 'Kategori wajib dipilih.',
+            'author_id.required' => 'Penulis wajib dipilih.',
             'category_id.exists' => 'Kategori yang dipilih tidak valid.',
             'publisher_id.required' => 'Penerbit wajib dipilih.',
             'publisher_id.exists' => 'Penerbit yang dipilih tidak valid.',

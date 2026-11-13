@@ -15,7 +15,7 @@ class CategoryController extends Controller
     public function index()
     {
         return view('kategori.index', [
-            'daftarKategori' => Category::withCount('books')->orderBy('name')->get(),
+            'daftarKategori' => Category::withCount('books')->orderBy('name')->get()
         ]);
 
     }

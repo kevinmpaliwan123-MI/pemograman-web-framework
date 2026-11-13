@@ -50,12 +50,13 @@
                 @foreach ($bukuSerupa as $serupa)
                     <li>
                         <a href="{{ route('buku.show', $serupa->id) }}">{{ $serupa->title }}</a>
-                        <span class="text-muted">— {{ $serupa->author_name }}</span>
+                        <span class="text-muted">— {{ $serupa->author->writer }}</span>
                     </li>
                 @endforeach
             </ul>
         @endif
     @else
+
         <div class="alert alert-warning">
             Buku tidak ditemukan.
         </div>

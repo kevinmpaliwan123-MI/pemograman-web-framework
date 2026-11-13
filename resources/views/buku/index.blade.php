@@ -22,12 +22,24 @@
                 @endforeach
             </select>
         </div>
+
         <div class="col-md-3">
             <select name="penerbit" class="form-select">
                 <option value="">Semua penerbit</option>
                 @foreach ($daftarPenerbit as $penerbit)
                     <option value="{{ $penerbit->id }}" @selected($penerbitId == $penerbit->id)>
                         {{ $penerbit->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <select name="penulis" class="form-select">
+                <option value="">Semua penulis</option>
+                @foreach ($daftarPenulis as $penulis)
+                    <option value="{{ $penulis->id }}" @selected($penulisId == $penulis->id)>
+                        {{ $penulis->writer }}
                     </option>
                 @endforeach
             </select>

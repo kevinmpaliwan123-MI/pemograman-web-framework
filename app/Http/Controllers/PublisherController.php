@@ -15,7 +15,7 @@ class PublisherController extends Controller
     public function index()
     {
         return view('penerbit.index', [
-            'daftarPenerbit' => Publisher::withCount('books')->orderBy('name')->get(),
+            'daftarPenerbit' => Publisher::withCount('books')->orderBy('name')->get()
         ]);
     }
 

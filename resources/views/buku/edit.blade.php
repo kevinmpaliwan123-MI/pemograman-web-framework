@@ -20,11 +20,14 @@
         </div>
 
         <div class="mb-3">
-            <label for="author_name" class="form-label">Nama Penulis</label>
-            <input type="text" id="author_name" name="author_name"
-                   class="form-control @error('author_name') is-invalid @enderror"
-                   value="{{ old('author_name', $buku->author_name) }}">
-            @error('author_name')
+            <label for="author_id" class="form-label">Penulis</label>
+            <select id="author_id" name="author_id" class="form-select @error('author_id') is-invalid @enderror">
+                <option value="">-- Pilih Penulis --</option>
+                @foreach ($daftarPenulis as $penulis)
+                    <option value="{{ $penulis->id }}" @selected(old('author_id', $buku->author_id) == $penulis->id)>{{ $penulis->writer }}</option>
+                @endforeach
+            </select>
+            @error('author_id')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
